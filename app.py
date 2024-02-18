@@ -29,13 +29,13 @@ def save_images():
     print(f"「{customer_name}」フォルダが生成されました。")
     # Save the sample image
     sample_image_data = data.get('sampleImage')
-    sample_image_path = os.path.join(folder_path, f"{datetime.now().strftime('%Y%m%d%H%M%S')}-1ssss.png")
+    sample_image_path = os.path.join(folder_path, f"{datetime.now().strftime('%Y%m%d%H%M%S')}-1{customer_name}.png")
     # sample_image_data.save(sample_image_path)
     download_and_save_image(sample_image_data, sample_image_path)
     
     # Save the screenshot image
     screenshot_image_data = data.get('screenshotImage')
-    screenshot_image_path = os.path.join(folder_path, f"{datetime.now().strftime('%Y%m%d%H%M%S')}-2ssss.png")
+    screenshot_image_path = os.path.join(folder_path, f"{datetime.now().strftime('%Y%m%d%H%M%S')}-2{customer_name}.png")
     save_base64_image(screenshot_image_data, screenshot_image_path)
     
     return jsonify(message="Images saved successfully")
