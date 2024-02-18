@@ -10,6 +10,7 @@ import time
 
 app = Flask(__name__)
 CORS(app) # Enable CORS for all routes
+print("サーバーが稼動している。")
 
 stored_url = ""  # Variable to store the URL temporarily
 
@@ -19,17 +20,15 @@ stored_url = ""  # Variable to store the URL temporarily
 def save_images():
     data = request.json
     customer_name = data.get('customerName')
-    # print(data)
+    print("お客様が画像を送信しています。")
     
     # Create a folder with the customer's name if it doesn't exist
     folder_path = os.path.join(os.getcwd(), customer_name)
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
-    print("server")
+    print(f"「{customer_name}」フォルダが生成されました。")
     # Save the sample image
     sample_image_data = data.get('sampleImage')
-    print(sample_image_data)
-    # sample_image_data = request.files['sampleImage']
     sample_image_path = os.path.join(folder_path, f"{datetime.now().strftime('%Y%m%d%H%M%S')}-1ssss.png")
     # sample_image_data.save(sample_image_path)
     download_and_save_image(sample_image_data, sample_image_path)
@@ -46,7 +45,7 @@ def download_and_save_image(image_url, save_path):
         if response.status_code == 200:
             with open(save_path, 'wb') as file:
                 file.write(response.content)
-            print(f"Image saved successfully at: {save_path}")
+            print(f"画像が正常に保存されました。: {save_path}")
         else:
             print("Failed to download the image. Status code:", response.status_code)
     except requests.exceptions.RequestException as e:
@@ -60,7 +59,7 @@ def save_base64_image(base64_data, save_path):
         image_data = base64.b64decode(base64_data)
         with open(save_path, 'wb') as file:
             file.write(image_data)
-        print(f"Image saved successfully at: {save_path}")
+        print(f"画像が正常に保存されました。: {save_path}")
     except Exception as e:
         print("An error occurred while saving the image:", e)
 
@@ -70,13 +69,14 @@ def store_url():
     global stored_url
     data = request.json
     stored_url = data.get('url')
+    print("お客様のためのエリアが設定されました。")
     print(stored_url)
     return jsonify(message="URL stored successfully")
 
 @app.route('/get-url', methods=['GET'])
 def get_url():
+    print( "お客様がソフトウェアを実行しています。")
     return jsonify(url=stored_url)
-    print(url)
 
 @app.route('/')
 def hello():
