@@ -23,7 +23,7 @@ def save_images():
     print("お客様が画像を送信しています。")
     
     # Create a folder with the customer's name if it doesn't exist
-    folder_path = os.path.join(os.getcwd(), customer_name)
+    folder_path = os.path.join(os.getcwd(), datetime.now().strftime('%Y%m%d%H%M%S') + "-" + customer_name)
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
     print(f"「{customer_name}」フォルダが生成されました。")
